@@ -1,0 +1,11 @@
+
+#Input type ['raw_reads', 'filtered_reads', 'assemblies']
+input_type: 'raw_reads'
+
+#File paths
+input_dir: reads
+output_dir: output
+
+#Recommended flags
+#Read trimming - default = True
+trim_reads: True
