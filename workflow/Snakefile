@@ -1,0 +1,17 @@
+import re
+import subprocess
+import os
+from os import path
+import git
+
+configfile: "config/default.yaml"
+
+#Read trimming/QC
+if config['trim_reads'] == True:
+    include: "rules/readtrim_readQC.smk"
+
+elif config['trim_reads'] == False:
+    include: "rules/readQC.smk"
+
+    
+
