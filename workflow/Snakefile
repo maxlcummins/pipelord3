@@ -8,10 +8,20 @@ configfile: "config/default.yaml"
 
 #Read trimming/QC
 if config['trim_reads'] == True:
-    include: "rules/readtrim_readQC.smk"
+    include: "rules/fastp_pe_QC_trim.smk"
 
 elif config['trim_reads'] == False:
-    include: "rules/readQC.smk"
+    include: "rules/fastp_pe_QC.smk"
+
+#Genome assembly
+#Check input type
+if config['input_type'] not in ['raw_reads', 'filtered_reads', 'assemblies']:
+    print('Valid options for \'input_type\' are: \'raw_reads\', \'filtered_reads\', \'assemblies\'')
+
+elif config['input_type'] == 'raw_reads':
+    include: "rules/shovill.smk"
+
+
 
     
 
