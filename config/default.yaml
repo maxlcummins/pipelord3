@@ -9,3 +9,6 @@ output_dir: output
 #Recommended flags
 #Read trimming - default = True
 trim_reads: True
+
+#Assembly-stats: To disable, set to False
+assembly_stats: True #False
