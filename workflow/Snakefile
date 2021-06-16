@@ -21,7 +21,9 @@ if config['input_type'] not in ['raw_reads', 'filtered_reads', 'assemblies']:
 elif config['input_type'] == 'raw_reads':
     include: "rules/shovill.smk"
 
-
+#Assembly stats
+if config['assembly_stats'] != False:
+    include: "rules/assembly-stats.smk"
 
     
 
