@@ -6,6 +6,40 @@ import git
 
 configfile: "config/default.yaml"
 
+assembler=config['assembler']
+fofn=config['file_of_file_names']
+
+print(fofn)
+
+
+samples, = glob_wildcards(config['input_dir']+"/{sample}.R1.fastq.gz")
+
+
+rule all:
+    input:
+        expand(config['output_dir']+"/assembly-stats/{assembler}/{sample}.txt", assembler=assembler, sample=samples),
+        expand(config['output_dir']+"/summaries/{assembler}/assembly_stats.txt", assembler=assembler, sample=samples),
+        expand(config['output_dir']+"/fastp/trimmed/pe/{sample}.R1.fastq.gz", sample=samples),
+        expand(config['output_dir']+"/fastp/trimmed/pe/{sample}.R2.fastq.gz", sample=samples),
+        expand(config['output_dir']+"/shovill/{sample}.{assembler}.contigs.fa", assembler=assembler, sample=samples)
+
+
+
+
+if len([i for i in samples if "." in i]) > 0:
+    print("\n\n")
+    print(
+        "Warning: One or more of your read sets has a full-stop/period ('.') in some of the sample names, shown below."
+    )
+    print("This is a problem because this character breaks many bioinformatic tools.")
+    print(
+        "It is a character usually reserved for separating sample names from suffixes like '.fasta'."
+    )
+    print([i for i in samples if "." in i])
+    print("\n\n")
+    sys.exit()
+
+
 #Read trimming/QC
 if config['trim_reads'] == True:
     include: "rules/fastp_pe_QC_trim.smk"
@@ -24,6 +58,7 @@ elif config['input_type'] == 'raw_reads':
 #Assembly stats
 if config['assembly_stats'] != False:
     include: "rules/assembly-stats.smk"
+    include: "rules/assembly_stats_summarise.smk"
 
     
 

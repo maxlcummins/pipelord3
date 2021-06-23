@@ -1,4 +1,6 @@
 
+file_of_file_names: config/fofn.txt
+
 #Input type ['raw_reads', 'filtered_reads', 'assemblies']
 input_type: 'raw_reads'
 
@@ -10,5 +12,9 @@ output_dir: output
 #Read trimming - default = True
 trim_reads: True
 
+#Shovill assembler
+assembler: spades
+
 #Assembly-stats: To disable, set to False
 assembly_stats: True #False
+
